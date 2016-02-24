@@ -1,0 +1,72 @@
+body {
+	text-align: center;
+	font-family: 'Advent Pro', sans-serif;
+	font-weight: 500;
+	background: #333333;
+	color:  #66cccc;
+}
+
+.title-text {
+	font-size: 3.5em;
+	font-weight: 600;
+}
+
+.city-text, .temp-text {
+	display: inline-block;
+	font-size: 2.25em;
+}
+
+.temp-unit {
+	color: white;
+}
+
+.condition-icon img {
+	height: 120px;
+	width: 120px;
+	margin-top: -15px;
+}
+
+.weather-condition {
+	margin-top: -15px;
+	margin-bottom: 20px;
+}
+
+.refresh {
+	font-weight: 500;
+	font-size: 1.25em;
+	color: #66cccc;
+	background-color: #333333;
+	border-color: #66cccc;
+	margin: 10px 0;
+	transition: all .2s ease-in-out;
+}
+
+.refresh:hover {
+	background-color: #66cccc;
+	color: #333333;
+	border-color: #333333;
+}
+
+.g-icon {
+	margin-right: 10px;
+}
+
+footer {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+}
+
+.github-icon {
+	color: #66cccc;
+	transition: all .1s ease-in-out;
+}
+
+.github-icon:hover {
+	color: white;
+	transform: scale(1.3);
+}
+
+a:hover {
+	text-decoration: none;
+}
