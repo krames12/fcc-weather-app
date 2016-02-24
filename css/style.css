@@ -6,6 +6,10 @@ body {
 	color:  #66cccc;
 }
 
+.container {
+	padding-top: 10%;
+}
+
 .title-text {
 	font-size: 3.5em;
 	font-weight: 600;
