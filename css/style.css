@@ -20,6 +20,10 @@ body {
 	color: white;
 }
 
+.cels {
+	margin-left: 5px;
+}
+
 .condition-icon img {
 	height: 120px;
 	width: 120px;
