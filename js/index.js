@@ -9,6 +9,7 @@ var fTemp;
 var cTemp;
 var tempType;
 
+// Initiates geolocation
 navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
 
 function geoError(error){
@@ -16,14 +17,17 @@ function geoError(error){
 }
 
 function geoSuccess(position){
+	// Edits location URL to be used as the API call to match coordinates of user
 	lng = position.coords.longitude;
 	lat = position.coords.latitude;
 	locationURL = ("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=" + apiKey);
 
+	// Gets the data and changes the information on the page to reflect current weather
 	getData(locationURL);
 	pageChange();
 }
 
+// Makes API call to Open Weather Map and adjusts temperature variables
 function getData(loc){
 	httpReq.open("GET", loc, false);
 	httpReq.send();
@@ -38,6 +42,7 @@ function pageChange(){
 	$(".condition-icon").html("<img src='http://openweathermap.org/img/w/" + weatherInfo.weather[0].icon + ".png' alt='Weather condition icon.'></img>");
 	$(".weather-condition").html(weatherInfo.weather[0].description.toUpperCase());
 
+	// Checks if US and changes unit of measurement accordingly
 	if(weatherInfo.sys.country == "US"){
 		tempType = "f";
 		$(".temp-number").html(fTemp);
@@ -49,6 +54,7 @@ function pageChange(){
 	}
 }
 
+// Allows user to toggle between Farhenheit and Celsius with visual representation of the current unit
 $(".temp-unit").click(function(){
 	if(tempType == "c"){
 		tempType = "f";
