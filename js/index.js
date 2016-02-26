@@ -4,7 +4,7 @@ var weatherInfo;
 var httpReq = new XMLHttpRequest();
 var request;
 var locationURL;
-var apiKey = "97aa3fe4ed2a80516a95bda9f813a22e";
+var apiKey = "MY_API_KEY";
 var fTemp;
 var cTemp;
 var tempType;
