@@ -1,76 +1,68 @@
-body {
-	text-align: center;
-	font-family: 'Advent Pro', sans-serif;
-	font-weight: 500;
-	background: #333333;
-	color:  #66cccc;
+var lng;
+var lat;
+var weatherInfo;
+var httpReq = new XMLHttpRequest();
+var request;
+var locationURL;
+var apiKey = "97aa3fe4ed2a80516a95bda9f813a22e";
+var fTemp;
+var cTemp;
+var tempType;
+
+navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+
+function geoError(error){
+	$(".current-city").html("<p>Geolocation is not supported by your browser.");
 }
 
-.title-text {
-	font-size: 3.5em;
-	font-weight: 600;
+function geoSuccess(position){
+	lng = position.coords.longitude;
+	lat = position.coords.latitude;
+	locationURL = ("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=" + apiKey);
+
+	getData(locationURL);
+	pageChange();
 }
 
-.city-text, .temp-text {
-	display: inline-block;
-	font-size: 2.25em;
+function getData(loc){
+	httpReq.open("GET", loc, false);
+	httpReq.send();
+	weatherInfo = JSON.parse(httpReq.responseText);
+	fTemp = Math.floor(weatherInfo.main.temp * (9/5) - 459.67);
+	cTemp = Math.floor(weatherInfo.main.temp - 273.15);
 }
 
-.temp-unit {
-	color: white;
+function pageChange(){
+	$(".current-city").html(weatherInfo.name.toUpperCase() + ", ");
+	$(".city-country").html(weatherInfo.sys.country.toUpperCase());
+	$(".condition-icon").html("<img src='http://openweathermap.org/img/w/" + weatherInfo.weather[0].icon + ".png' alt='Weather condition icon.'></img>");
+	$(".weather-condition").html(weatherInfo.weather[0].description.toUpperCase());
+
+	if(weatherInfo.sys.country == "US"){
+		tempType = "f";
+		$(".temp-number").html(fTemp);
+		$(".cels").css("opacity", "0.5");
+	} else {
+		tempType = "c"
+		$(".temp-number").html(cTemp);
+		$(".farh").css("opacity", "0.5");
+	}
 }
 
-.cels {
-	margin-left: 10px;
-}
+$(".temp-unit").click(function(){
+	if(tempType == "c"){
+		tempType = "f";
+		$(".temp-number").html(fTemp);
+	  $(".cels").css("opacity", "0.5");
+		$(".farh").css("opacity", "1");
+	} else if (tempType == "f") {
+		tempType = "c"
+		$(".temp-number").html(cTemp);
+		$(".farh").css("opacity", "0.5");
+		$(".cels").css("opacity", "1");
+	}
+})
 
-.condition-icon img {
-	height: 120px;
-	width: 120px;
-	margin-top: -15px;
-}
-
-.weather-condition {
-	margin-top: -15px;
-	margin-bottom: 20px;
-}
-
-.refresh {
-	font-weight: 500;
-	font-size: 1.25em;
-	color: #66cccc;
-	background-color: #333333;
-	border-color: #66cccc;
-	margin: 10px 0;
-	transition: all .2s ease-in-out;
-}
-
-.refresh:hover {
-	background-color: #66cccc;
-	color: #333333;
-	border-color: #333333;
-}
-
-.g-icon {
-	margin-right: 10px;
-}
-
-footer {
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-}
-
-.github-icon {
-	color: #66cccc;
-	transition: all .1s ease-in-out;
-}
-
-.github-icon:hover {
-	color: white;
-	transform: scale(1.3);
-}
-
-a:hover {
-	text-decoration: none;
-}
+$(".refresh").click(function(){
+	navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+})
